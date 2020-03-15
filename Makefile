@@ -3,6 +3,7 @@ SHELL := /usr/bin/env bash
 all:
 	@echo >&2 "Only 'make check' allowed"
 
+SKIP_SQUASH ?= 0
 
 TESTED_IMAGES = \
 	postgresql-container \
@@ -34,7 +35,7 @@ shellcheck:
 
 check-failures: check-test-lib
 	cd tests/failures/check && make tag && ! make check && make clean
-	grep -q "Red Hat Enterprise Linux release 8" /etc/system-release || cd tests/failures/check && make tag SKIP_SQUASH=0
+	grep -q "Red Hat Enterprise Linux release 8" /etc/system-release || cd tests/failures/check && make tag SKIP_SQUASH=$(SKIP_SQUASH)
 
 check-squash:
 	./tests/squash/squash.sh
