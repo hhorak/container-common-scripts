@@ -22,7 +22,7 @@ class ImageStreamChecker(object):
             return json.load(f)
 
     def check_version(self, json_dict: Dict):
-        return [tags for tags in json_dict["spec"]["tags"] if tags["name"] == self.version]
+        return [tags for tags in json_dict["spec"]["tags"] if tags["name"] == self.version or tags["name"].startswith(self.version + '-')]
 
     def check_latest_tag(self, json_dict: Dict):
         latest_tag_correct: bool = False
